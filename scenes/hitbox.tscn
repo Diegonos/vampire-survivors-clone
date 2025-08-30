@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://bd3jji5ayckxw"]
+
+[ext_resource type="Script" uid="uid://btwa8ji1x7oou" path="res://scripts/hitbox.gd" id="1_0vdsg"]
+
+[node name="Hitbox" type="Area2D" groups=["attack"]]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_0vdsg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+one_way_collision_margin = 0.5
+
+[node name="DisableHitboxTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="DisableHitboxTimer" to="." method="_on_disable_hitbox_timer_timeout"]
