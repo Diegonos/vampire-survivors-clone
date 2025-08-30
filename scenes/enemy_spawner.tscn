@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dnljh03q07233"]
+[gd_scene load_steps=5 format=3 uid="uid://dnljh03q07233"]
 
 [ext_resource type="Script" uid="uid://bvh0hy1ur0282" path="res://scripts/enemy_spawner.gd" id="1_ks1gq"]
 [ext_resource type="Script" uid="uid://bydjeqb8xgj0d" path="res://scripts/spawn_info.gd" id="2_xl0gr"]
@@ -13,18 +13,9 @@ enemy_num = 1
 enemy_spawn_delay = 0
 metadata/_custom_type_script = "uid://bydjeqb8xgj0d"
 
-[sub_resource type="Resource" id="Resource_xl0gr"]
-script = ExtResource("2_xl0gr")
-time_start = 5
-time_end = 60
-enemy = ExtResource("3_ih16b")
-enemy_num = 10
-enemy_spawn_delay = 0
-metadata/_custom_type_script = "uid://bydjeqb8xgj0d"
-
 [node name="EnemySpawner" type="Node2D"]
 script = ExtResource("1_ks1gq")
-spawns = Array[ExtResource("2_xl0gr")]([SubResource("Resource_31irv"), SubResource("Resource_xl0gr")])
+spawns = Array[ExtResource("2_xl0gr")]([SubResource("Resource_31irv")])
 
 [node name="Timer" type="Timer" parent="."]
 autostart = true
