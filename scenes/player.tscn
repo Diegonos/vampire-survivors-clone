@@ -1,8 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://drcdgfustf5e6"]
+[gd_scene load_steps=13 format=3 uid="uid://drcdgfustf5e6"]
 
 [ext_resource type="Texture2D" uid="uid://dbhi5bqbmdb6g" path="res://assets/textures/Player/player_sprite.png" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://df63mybyyon0r" path="res://scripts/player.gd" id="1_g2els"]
 [ext_resource type="PackedScene" uid="uid://c8yguhjtgvmqj" path="res://scenes/hurtbox.tscn" id="3_qhqgy"]
+[ext_resource type="Texture2D" uid="uid://cj0aaddntcoe" path="res://assets/textures/GUI/exp_background.png" id="4_qlg0r"]
+[ext_resource type="Texture2D" uid="uid://cjhuespbs04qv" path="res://assets/textures/GUI/exp_progress.png" id="5_tuyoq"]
+[ext_resource type="FontFile" uid="uid://cuc702yjoyoit" path="res://assets/font/tenderness.otf" id="6_tuyoq"]
+[ext_resource type="AudioStream" uid="uid://kfjxw3itj06v" path="res://assets/audio/SoundEffect/levelup.ogg" id="7_fjrip"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g2els"]
 radius = 4.0
@@ -13,6 +17,11 @@ size = Vector2(12, 18)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qhqgy"]
 radius = 368.034
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dqkch"]
+radius = 50.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qlg0r"]
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_g2els")
@@ -62,12 +71,87 @@ wait_time = 0.2
 unique_name_in_owner = true
 
 [node name="EnemyDetectionArea" type="Area2D" parent="."]
+visible = false
 collision_layer = 4
 collision_mask = 4
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyDetectionArea"]
 shape = SubResource("CircleShape2D_qhqgy")
+
+[node name="GrabArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GrabArea"]
+shape = SubResource("CircleShape2D_dqkch")
+
+[node name="CollectArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollectArea"]
+shape = SubResource("CircleShape2D_qlg0r")
+
+[node name="GUILayer" type="CanvasLayer" parent="."]
+
+[node name="GUI" type="Control" parent="GUILayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 640.0
+offset_bottom = 360.0
+
+[node name="ExperienceBar" type="TextureProgressBar" parent="GUILayer/GUI"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture_under = ExtResource("4_qlg0r")
+texture_progress = ExtResource("5_tuyoq")
+
+[node name="Lbl_level" type="Label" parent="GUILayer/GUI/ExperienceBar"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 540.0
+offset_right = 640.0
+offset_bottom = 20.0
+theme_override_fonts/font = ExtResource("6_tuyoq")
+theme_override_font_sizes/font_size = 16
+text = "Level 1"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="LevelUp" type="Panel" parent="GUILayer/GUI"]
+unique_name_in_owner = true
+process_mode = 2
+visible = false
+layout_mode = 0
+offset_left = 800.0
+offset_top = 50.0
+offset_right = 1000.0
+offset_bottom = 300.0
+
+[node name="lbl_LevelUp" type="Label" parent="GUILayer/GUI/LevelUp"]
+layout_mode = 0
+offset_right = 200.0
+offset_bottom = 50.0
+theme_override_fonts/font = ExtResource("6_tuyoq")
+text = "Level up!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="UpgradeOptions" type="VBoxContainer" parent="GUILayer/GUI/LevelUp"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 10.0
+offset_top = 50.0
+offset_right = 190.0
+offset_bottom = 100.0
+
+[node name="snd_levelup" type="AudioStreamPlayer" parent="GUILayer/GUI/LevelUp"]
+unique_name_in_owner = true
+stream = ExtResource("7_fjrip")
+volume_db = -10.0
 
 [connection signal="hurt" from="Hurtbox" to="." method="_on_hurtbox_hurt"]
 [connection signal="timeout" from="Attack/IceSpearTimer" to="." method="_on_ice_spear_timer_timeout"]
@@ -76,5 +160,7 @@ shape = SubResource("CircleShape2D_qhqgy")
 [connection signal="timeout" from="Attack/TornadoTimer/TornadoAttackTimer" to="." method="_on_tornado_attack_timer_timeout"]
 [connection signal="body_entered" from="EnemyDetectionArea" to="." method="_on_enemy_detection_area_body_entered"]
 [connection signal="body_exited" from="EnemyDetectionArea" to="." method="_on_enemy_detection_area_body_exited"]
+[connection signal="area_entered" from="GrabArea" to="." method="_on_grab_area_area_entered"]
+[connection signal="area_entered" from="CollectArea" to="." method="_on_collect_area_area_entered"]
 
 [editable path="Hurtbox"]
