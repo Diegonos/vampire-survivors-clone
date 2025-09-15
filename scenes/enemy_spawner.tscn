@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bvh0hy1ur0282" path="res://scripts/enemy_spawner.gd" id="1_ks1gq"]
 [ext_resource type="Script" uid="uid://bydjeqb8xgj0d" path="res://scripts/spawn_info.gd" id="2_xl0gr"]
-[ext_resource type="PackedScene" uid="uid://bpwa37d4408wg" path="res://scenes/enemy.tscn" id="3_ih16b"]
+[ext_resource type="PackedScene" uid="uid://bpwa37d4408wg" path="res://scenes/enemy_kobold_weak.tscn" id="3_ih16b"]
 
 [sub_resource type="Resource" id="Resource_31irv"]
 script = ExtResource("2_xl0gr")

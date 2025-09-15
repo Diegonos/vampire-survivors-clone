@@ -91,5 +91,5 @@ func _physics_process(delta: float) -> void:
 	position += angle * speed * delta
 	
 func _on_timer_timeout() -> void:
-	emit_signal("remove_from_array")
+	emit_signal("remove_from_array", self)
 	queue_free()
